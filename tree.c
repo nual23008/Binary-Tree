@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct {
+typedef struct Node{
     int data;
     struct Node* Left;
     struct Node* Right;
@@ -41,4 +41,61 @@ void Insert_Recursive(Node** Current_Node, int data) {
     if(data > (*Current_Node)->data) {
         Insert_Recursive(&((*Current_Node)->Right), data);
     }
+}
+
+void Insert(Tree* T, int data) {
+    Insert_Recursive(&(T->root), data);
+}
+
+void Print_Tree(Node* Current_Node) {
+    if(Current_Node != NULL) {
+        Print_Tree(Current_Node->Left);
+        printf("%d ", Current_Node->data);
+        Print_Tree(Current_Node->Right);
+    }
+}
+
+void Swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void Heapify(int arr[], int n, int i) {
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+
+    if (left < n && arr[left] > arr[largest]) {
+        largest = left;
+    }
+
+    if (right < n && arr[right] > arr[largest]) {
+        largest = right;
+    }
+
+    if (largest != i) {
+        Swap(&arr[i], &arr[largest]);
+
+        Heapify(arr, n, largest);
+    }
+}
+
+void Build_Heap(int arr[], int n) {
+    for (int i = (n / 2) - 1; i >= 0; i--) {
+        Heapify(arr, n, i);
+    }
+}
+
+int main() {
+    // Cay trong slide
+    Tree* T = Create_Tree();
+    int a[] = {0, 4, 1, 3, 2, 16, 9, 10, 14, 8, 7};
+    for(int i = 0; i < 11; i++) {
+        Insert(T, a[i]);
+    }
+
+    Print_Tree(T->root);
+
+    return 0;
 }
