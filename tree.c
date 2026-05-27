@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+typedef struct {
+    int data;
+    struct Node* Left;
+    struct Node* Right;
+}Node;
+
+Node* Create_Node(int value) {
+    Node* p = (Node*)malloc(sizeof(Node));
+    p->data = value;
+    p->Left = NULL;
+    p->Right = NULL;
+    return p;
+}
+
+typedef struct {
+    Node* root;
+    int total_node;
+}Tree;
+
+Tree* Create_Tree() {
+    Tree* t = (Tree*)malloc(sizeof(Tree));
+    t->root = NULL;
+    t->total_node = 0;
+    return t;
+}
+
